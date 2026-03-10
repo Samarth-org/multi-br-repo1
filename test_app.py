@@ -19,11 +19,3 @@ def test_health(client):
     assert response.status_code == 200
     data = response.get_json()
     assert data['health'] == "ok"
-```
-
----
-
-## 📄 `requirements.txt`
-```
-flask==3.0.0
-pytest==7.4.3
