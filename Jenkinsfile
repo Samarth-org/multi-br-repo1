@@ -40,7 +40,7 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                echo "Building Docker image: ${IMAGE_NAME}:${IMAGE_TAG}"
+                echo "Building Docker image..."
                 sh "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ."
             }
         }
@@ -72,32 +72,7 @@ pipeline {
             echo "Pipeline FAILED on branch: ${env.BRANCH_NAME}"
         }
         always {
-            echo "Cleaning up workspace..."
             cleanWs()
         }
     }
 }
-```
-
----
-
-## What Each Stage Does
-
-| Stage | What happens |
-|---|---|
-| **Checkout** | Pulls code from the branch |
-| **Build** | Creates virtualenv & installs pip deps |
-| **Test** | Runs pytest on `test_app.py` |
-| **Build Docker Image** | Builds image tagged as `branch-buildnumber` |
-| **Push to DockerHub** | Logs in with `dockerhub-creds` & pushes |
-| **Cleanup** | Removes local image & cleans workspace |
-
----
-
-## Docker Image Tagging
-
-Your images will be pushed as:
-```
-samarthdoc123/python-app:dev-1
-samarthdoc123/python-app:dev-2
-samarthdoc123/python-app:main-1
